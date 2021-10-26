@@ -5,6 +5,7 @@
 # Importing the respective library threading.
 import time
 import threading
+from typing import Text
 
 
 def hello():
@@ -98,3 +99,79 @@ t2 = threading.Thread(target=double)
 #t2.start()
 
 # Semaphores
+
+import threading
+import time
+
+
+semaphore = threading.BoundedSemaphore(value=5) # Create the semaphore object
+
+
+def access(thread_number):
+
+    print("{}: Trying access...".format(thread_number))
+    semaphore.acquire()
+    print("{}: Access granted!".format(thread_number))
+    print("{}: Waiting 5 seconds...".format(thread_number))
+    time.sleep(5)
+    semaphore.release()
+    print("{}: Releasing!".format(thread_number))
+
+#for thread_number in range(10):
+#    t = threading.Thread(target=access, args=(thread_number,))
+#    t.start()
+
+# When we run this code, you will see that the first five threads will immediately run the code, whereas the remaining five threads will need to wait five seconds until the first threads release the semaphore.
+
+
+# Events 
+
+# Basically used to manage our threads even better.
+# It will activate a thread when a certain event happens.
+
+import threading
+
+event = threading.Event()
+
+def function():
+    print("Waitng for event...")
+    event.wait()
+    print("Continuing!")
+
+thread = threading.Thread(target=function)
+#thread.start()
+
+#x = input("Trigger event? ")
+#if x == "yes":
+#    event.set()
+
+# Daemon Threads
+
+#Daemon threads are typically used for background tasks like synchronizing, loading or cleaning up files that are not needed anymore.
+
+import threading
+import time
+
+path = "text.txt"
+text = ""
+
+def readFile():
+    global path, Text
+    while True:
+        with open(path) as file:
+            text = file.read()
+            time.sleep(3)
+
+def printLoop():
+    global text
+    for c in range(30):
+        print(text)
+        time.sleep(1)
+    
+t1 = threading.Thread(target=readFile, daemon=True)
+t2 = threading.Thread(target=printLoop)
+
+#t1.start()
+#t2.start()
+
+# Since the ordinary threads are all finished, the program ends and the daemon thread just gets terminated.

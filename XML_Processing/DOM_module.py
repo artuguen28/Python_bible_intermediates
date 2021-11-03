@@ -1,6 +1,4 @@
 import xml.dom.minidom
-import os
-
 
 domtree = xml.dom.minidom.parse("XML_Processing\group.xml")
 group = domtree.documentElement
@@ -12,7 +10,8 @@ for person in persons:
     if person.hasAttribute("id"):
         print("ID: %s" % person.getAttribute("id"))
 
-    name = person.getElementsByTagName ("name")[0]
+    name = person.getElementsByTagName("name")[0]
     age = person.getElementsByTagName("age")[0]
     weight = person.getElementsByTagName("weight")[0]
     height = person.getElementsByTagName("height")[0]
+
